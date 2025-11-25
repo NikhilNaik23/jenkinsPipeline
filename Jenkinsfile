@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/NikhilNaik23/jenkinsPipeline.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 echo 'Building Docker image...'

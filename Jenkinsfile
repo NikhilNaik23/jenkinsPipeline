@@ -18,8 +18,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying container...'
-                sh 'docker rm -f html-container || true'
-                sh 'docker run -d -p 8080:80 --name html-container my-html-website'
+                sh 'docker stop html-container || true'
+                sh 'docker rm html-container || true'
+                sh 'docker run -d -p 8081:80 --name html-container my-html-website'
             }
         }
     }

@@ -2,28 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/NikhilNaik23/jenkinsPipeline.git'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                script {
-                    dockerImage = docker.build("my-html-website")
-                }
+                echo 'Building Docker image...'
+                sh 'docker build -t my-html-website .'
             }
         }
 
-        stage('Deploy Container') {
+        stage('Deploy') {
             steps {
-                script {
-                    // Stop old container if running
-                    sh 'docker rm -f html-container || true'
-                    // Run new container
-                    sh 'docker run -d -p 8080:80 --name html-container my-html-website'
-                }
+                echo 'Deploying container...'
+                sh 'docker rm -f html-container || true'
+                sh 'docker run -d -p 8080:80 --name html-container my-html-website'
             }
         }
     }
